@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    google.load("feeds", "1");
+    
+    function feedLoaded(result) {
+      if (!result.error) {
+        var container = document.getElementById("content");
+        container.innerHTML = '';
+
+        // http://code.google.com/apis/ajaxfeeds/documentation/reference.html#JSON
+        for (var i = 0; i < result.feed.entries.length; i++) {
+          var entry = result.feed.entries[i];
+          var div = document.createElement("div");
+
+          newlink = document.createElement('a');
+          newlink.setAttribute('href', entry.link);
+          newlink.setAttribute('target', '_TOP');
+          newlink.appendChild(document.createTextNode(entry.title))
+
+          div.appendChild(newlink);
+          container.appendChild(div);
+          container.appendChild(document.createElement('br'));
+        }
+      }
+    }
+    
+    function OnLoad() {
+      var feed = new google.feeds.Feed("http://londonjavacommunity.wordpress.com/feed/");
+      feed.load(feedLoaded);
+    }
+    
+    google.setOnLoadCallback(OnLoad);
+    </script>
+<style type="text/css">
+  body {
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+  }
+  h2 { margin: 0 0 1em 0 }
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+  li { margin: 1em 0; }
+
+  iframe{
+    background-color: transparent;
+    border: 0px none transparent;
+    padding: 0px;
+    /*overflow: hidden;*/
+}
+</style>
+  </head>
+  <body>
+    <h2>Recent News</h2>
+    <div id="content">Loading...</div>
+  </body>
+</html>
