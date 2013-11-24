@@ -88,14 +88,7 @@ function events_retrieved(data) {
         month = ds.pop();
         date = month + " " + day + ", " + year + " @ " + hour % 12 + ":" + 
           minute + (hour < 12 ? "am" : "pm");
-        // li = $('<li></li>');
-        // li.append($('<a href=""></a>').append(ev.name))
-        // go = $('<div></div>').append($('<a target="_TOP" href="' + ev.event_url + '"></a>').append(date))
-        // if (ev.status == 'upcoming')
-        //   go.append(' | ')
-        //     .append($('<a target="_TOP" href="' + ev.event_url + '" style="background: red; color: white; text-decoration: none; font-size: smaller; font-weight: bold; padding: .3em .5em; border: white; -webkit-border-radius: .3em; -moz-border-radius: .3em"></a>')
-        //       .append("RSVP")
-        //     );
+
 		anchor = $('<a href="'+ev.event_url+'" class="list-group-item"></a>');
 		header = $('<h4 class="list-group-item-heading"></h4>').append(ev.name);
 		main = $('<p class="list-group-item-text"></p>').append(date);
@@ -122,7 +115,7 @@ function events_retrieved(data) {
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Home</a></li>
             <li><a href="#events">Events</a></li>
             <li><a href="#news">News</a></li>
 			<li class="dropdown">
@@ -133,7 +126,15 @@ function events_retrieved(data) {
               </ul>
             </li>
             <li><a href="#jobs">Jobs</a></li>
-            
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Elsewhere on the web <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.github.com">Github</a></li>
+                <li><a href="https://www.twitter.com/ljcjug">Twitter</a></li>
+                <li><a href="http://londonjavacommunity.wordpress.com">Blog</a></li>
+                <li><a href="http://www.meetup.com/londonjavacommunity">Meetup.com</a></li>
+              </ul>
+            </li>
           </ul>          
         </div><!--/.nav-collapse -->
       </div>
