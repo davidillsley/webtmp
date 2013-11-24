@@ -1,40 +1,241 @@
-<html>
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>London Java Community</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+	<style type="text/css">
+	body {
+	  min-height: 2000px;
+	  padding-top: 70px;
+	}
+
+	.banner {
+	margin:auto;
+    width:100%;
+    max-width:720px;
+	}
+
+
+	</style>
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    google.load("feeds", "1");
+    
+    function feedLoaded(result) {
+      if (!result.error) {
+        var container = document.getElementById("content");
+       // container.innerHTML = '';
+
+        // http://code.google.com/apis/ajaxfeeds/documentation/reference.html#JSON
+        for (var i = 0; i < result.feed.entries.length; i++) {
+          var entry = result.feed.entries[i];
+
+          newlink = document.createElement('a');
+          newlink.setAttribute('href', entry.link);
+          newlink.setAttribute('class', 'list-group-item');
+          newlink.appendChild(document.createTextNode(entry.title))
+
+          container.appendChild(newlink);
+        }
+      }
+    }
+    
+    function OnLoad() {
+      var feed = new google.feeds.Feed("http://londonjavacommunity.wordpress.com/feed/");
+      feed.load(feedLoaded);
+    }
+    
+    google.setOnLoadCallback(OnLoad);
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+function events_retrieved(data) {
+  target = $("#event-list");
+  target.empty()
+    console.log(data.status)
+      // target.empty();
+      if (data.status && data.status.match(/^200/) == null) {
+        $("#event-list").empty();
+      } else for (var i in data.results.reverse()) {
+        ev = data.results[data.results.length - i - 1];
+        ds = ev.time.match(/\w+ (\w+) (\d+) (\d+):(\d+):\d+ \w+ (\d+)/)
+        year = ds.pop();
+        minute = ds.pop();
+        hour = ds.pop();
+        day = ds.pop();
+        month = ds.pop();
+        date = month + " " + day + ", " + year + " @ " + hour % 12 + ":" + 
+          minute + (hour < 12 ? "am" : "pm");
+        // li = $('<li></li>');
+        // li.append($('<a href=""></a>').append(ev.name))
+        // go = $('<div></div>').append($('<a target="_TOP" href="' + ev.event_url + '"></a>').append(date))
+        // if (ev.status == 'upcoming')
+        //   go.append(' | ')
+        //     .append($('<a target="_TOP" href="' + ev.event_url + '" style="background: red; color: white; text-decoration: none; font-size: smaller; font-weight: bold; padding: .3em .5em; border: white; -webkit-border-radius: .3em; -moz-border-radius: .3em"></a>')
+        //       .append("RSVP")
+        //     );
+		anchor = $('<a href="'+ev.event_url+'" class="list-group-item"></a>');
+		header = $('<h4 class="list-group-item-heading"></h4>').append(ev.name);
+		main = $('<p class="list-group-item-text"></p>').append(date);
+        target.append(anchor.append(header).append(main));
+      }
+    }
+
+</script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">London Java Community</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#news">News</a></li>
+			<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#adoptajsr">Adopt a JSR</a></li>
+                <li><a href="#adoptopenjdk">Adopt OpenJDK</a></li>
+              </ul>
+            </li>
+            <li><a href="#jobs">Jobs</a></li>
+            
+          </ul>          
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>London Java Community</h1>
+        <p>The London Java Community (LJC) is a group of Java Enthusiasts who are interested in benefiting from shared knowledge in the industry. </p><p>Through our forum and regular meetings you can keep in touch with the latest industry developments, learn new Java (& other JVM) technologies, meet other developers, discuss technical/non technical issues and network further throughout the Java Community.
+		</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="http://www.meetup.com/Londonjavacommunity/" role="button">Join Us &raquo;</a>
+        </p>
+      </div>
+	  
+	  <div class="page-header banner">
+        <img class="banner" src="http://londonjavacommunity.files.wordpress.com/2009/11/bannerblog.jpg"/>
+      </div>
+
+	 
+<div class="row">
+        <div class="col-sm-6">
+          <div class="panel panel-default">
+             <a id="events"></a>
+             <div class="panel-heading">
+              <h3 class="panel-title">Events</h3>
+            </div>
+            <div class="panel-body">
+<div id="event-list" class="list-group">
+      </div>
+
+
+            </div>
+          </div>
+          
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-6">
+          <div class="panel panel-success">
+            <a id="news"></a>
+            <div class="panel-heading">
+              <h3 class="panel-title">News</h3>
+            </div>
+            <div class="panel-body">
+             
+			<div id="content" class="list-group">
+      		</div>
+
+            </div>
+          </div>
+         
+        </div><!-- /.col-sm-4 -->
+        
+      </div>
+
+
+          <div class="panel panel-primary">
+            <div class="panel-heading"><a id="adoptajsr"></a>
+              <h3 class="panel-title">Adopt a JSR</h3>
+            </div>
+            <div class="panel-body">
+            	 This program is intended to encourage JUG members, individuals and other organisations to get involved in Java Specification Requests (JSRs). This means more grass roots, developer level participation in existing and emerging Java standards. JSRs cover all aspects of the Java ecosystem such as the new Date and Time API coming into Java 8, the existing JavaEE 7 APIS and the upcoming JavaEE 8 APIs for the cloud and more! 
+            </div>
+          </div>          
+
+          <div class="panel panel-info">
+            <div class="panel-heading"><a id="adoptopenjdk"></a>
+              <h3 class="panel-title">Adopt OpenJDK</h3>
+            </div>
+            <div class="panel-body">
+
+The Adopt OpenJDK program has a number of goals:
+
+    Lower the technical barriers to allow developers, JUGs and organisations to get involved in OpenJDK
+    Improve the Java, the language and the platform
+    To promote OpenJDK in the wider Java community
+    Broaden the base of contributors to OpenJDK 
+                </div>
+          </div>
+
+          <div class="panel panel-success">
+            <div class="panel-heading"><a id="jobs"></a>
+              <h3 class="panel-title">Jobs</h3>
+            </div>
+            <div class="panel-body">
+              <img src="http://www.recworks.co.uk/images/logo.png" />
+              <p>Recworks sponsor the LJC, and help many members find their next job. If you are looking for a Java position in London you can see the latest positions from RecWorks <a href="http://developercareers.recworks.co.uk/online/jobsearch.aspx">here</a></p>
+            </div>
+          </div>
+
+    </div> <!-- /container -->
 
 
 
-<style type="text/css">
-  body {
-    font-family: arial, sans-serif;
-    font-size: 12px;
-    padding: 0;
-    margin: 0;
-  }
-  h2 { margin: 0 0 1em 0 }
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-  }
-  li { margin: 1em 0; }
 
-  iframe{
-    background-color: transparent;
-    border: 0px none transparent;
-    padding: 0px;
-    /*overflow: hidden;*/
-}
-</style>
+  <script type="text/javascript" src="http://api.meetup.com/events?_=1385323293232&radius=25.0&before=6m&order=time&group_urlname=Londonjavacommunity&desc=true&offset=0&callback=events_retrieved&format=json&page=6&after=-6m&fields=&sig_id=12100728&sig=c7ddfa75d7e00da9f46ae543f492f9a3e44ec6c0"></script>
 
-</head>
-<body>
-  <img frameborder="0" src="http://londonjavacommunity.files.wordpress.com/2009/11/bannerblog.jpg"/><br>
-  <a class="twitter-timeline"  data-chrome="nofooter noheader"  href="https://twitter.com/ljcjug" data-tweet-limit="3" data-widget-id="404706878711549952" width="250" height="200">Tweets by @ljcjug</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-
-      <iframe src="events.html"  width="250" height="300"></iframe> 
-
-      <iframe src="blog.html"  width="250" height="300"></iframe><br>
-
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+  </body>
 </html>
